@@ -1,0 +1,73 @@
+CREATE TABLE mountains (id INT, name STRING)
+INSERT INTO mountains VALUES (1, "MontBlanc")
+INSERT INTO mountains VALUES (2, "Kazbek")
+INSERT INTO mountains VALUES (3, "Aconcagua")
+INSERT INTO mountains VALUES (4, "Everest")
+
+SELECT * FROM mountains
+
+ADD COLUMN mountains height INT
+UPDATE mountains SET height = 4810 WHERE name = "MontBlanc"
+UPDATE mountains SET height = 5054 WHERE name = "Kazbek"
+UPDATE mountains SET height = 6961 WHERE name = "Aconcagua"
+UPDATE mountains SET height = 8849 WHERE name = "Everest"
+
+CREATE TABLE clients (client_id INT, name STRING)
+INSERT INTO clients VALUES (1, "Kvazir")
+INSERT INTO clients VALUES (2, "Gudrun")
+INSERT INTO clients VALUES (3, "Bogna")
+INSERT INTO clients VALUES (4, "Soren")
+INSERT INTO clients VALUES (5, "Beska")
+
+
+CREATE TABLE trips (trip_id INT, mountains_id INT, client_id INT)
+INSERT INTO trips VALUES (101, 1, 1)
+INSERT INTO trips VALUES (102, 2, 1)
+INSERT INTO trips VALUES (103, 1, 4)
+
+
+
+
+SELECT * FROM trips
+
+--Wypisz ID i nazwę każdej góry o wysokości > 6000 m
+SELECT id, name FROM mountains WHERE height > 6000
+
+--Wypisz ID i nazwę wszystkich klientów, którzy brali udział w jakiejkolwiek wyprawie
+--przez brak joinów trzeba zrobić to 'ręcznie'
+SELECT * FROM trips WHERE client_id = 1
+SELECT * FROM clients WHERE client_id = 1
+
+
+--Wypisz wszystkie wyprawy klienta „Beska”
+SELECT * FROM clients WHERE name = "Beska"
+SELECT * FROM trips WHERE client_id = 5
+
+
+--Wypisz wszystkie góry, które zdobył Kvazir
+SELECT * FROM clients WHERE name = "Kvazir"
+SELECT mountains_id FROM trips WHERE client_id = 1
+SELECT * FROM mountains WHERE id = 1
+SELECT * FROM mountains WHERE id = 2
+
+
+--Zlicz ile wypraw odbył każdy klient
+SELECT * FROM trips WHERE client_id = 1
+SELECT * FROM trips WHERE client_id = 2
+SELECT * FROM trips WHERE client_id = 3
+
+--Usuń wyprawy na górę Kazbek
+SELECT id FROM mountains WHERE name = "Kazbek"
+DELETE FROM trips WHERE mountains_id = 2
+
+
+--Zwiększ wysokość wszystkich gór o 1 metr
+UPDATE mountains SET height = 4811 WHERE name = "MontBlanc"
+UPDATE mountains SET height = 5055 WHERE name = "Kazbek"
+UPDATE mountains SET height = 6962 WHERE name = "Aconcagua"
+UPDATE mountains SET height = 8850 WHERE name = "Everest"
+
+--zapisz do pliku
+SAVE TO "backup.txt"
+
+
